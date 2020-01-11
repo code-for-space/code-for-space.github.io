@@ -1,0 +1,32 @@
++++
+title = "Card Products"
+weight = 10
+tags = ["Cards", "Fulfillment"]
++++
+
+= Card Products
+:endpointdir: content/api/core/card_products
+:outfilesuffix: /
+:object: card product
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+The card products resource represents the behavior and functionality of one or more cards (either physical or virtual). For example, attributes of the card product determine whether the associated cards can be used at an ATM and/or online and whether they are currently enabled. For physical cards, the card product determines color and other printing specifications for when the cards are manufactured and personalized. You can optionally associate authorization controls and/or velocity controls with card products to restrict where and how associated cards are used.
+
+In most cases, Marqeta will create the card products for your production environment.
+
+[NOTE]
+For more information on cards, see <</guides/cards/about_cards.adoc#_about_cards, About Cards>>.
+
+== Create card product
+
+*Action:* `POST`
+*Endpoint:* `/cardproducts`
+
+Use this endpoint to create a card product.
+
+The card product request comprises a set of fields that provide basic information about the card product, such as name, active/inactive status, and start and end dates (see Body Field Details - Basic Information). 
+Configuration information is contained in the "config" object, which contains sub-elements whose fields control the features/behavior of the card product. 
+The elements are referred to as the card product "configuration," and as such are contained in a "config" object.

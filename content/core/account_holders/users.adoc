@@ -1,0 +1,25 @@
++++
+title = "Users"
+tags = ["Users", "Account Holders"]
+weight = 1
++++
+
+= Users
+:outfilesuffix: /
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+The users resource represents a person who uses a Marqeta card (physical or virtual) to redeem offers and access Marqeta-administered funds. 
+This endpoint enables you to create and manage users on the Marqeta platform.
+
+This resource stores user attributes such as name, address, and date of birth, as well as financial information such as balances. 
+By default, every user automatically has a general purpose account (GPA) that is used for the funding of transfers and is therefore an account holder. 
+Note that account balances reside at the account holder level — there are no separate "account" or "balance" objects.
+
+You can use the `/users` endpoint to create parent-child relationships between two users (where one user is the parent and the other is the child) or between a business and user (where the business is the parent and the user is the child). 
+This relationship provides reporting to the parent about how cards of children are used and enables the parent to monitor and even restrict card usage.
+
+[NOTE]
+A user can simultaneously be a child of a business and a parent of other users if the user is not configured to use a parent's account balances and the user's child is configured to use a parent's account balances.

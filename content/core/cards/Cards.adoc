@@ -1,0 +1,28 @@
++++
+title = "Cards"
+tags = ["Cards", "Fulfillment"]
+weight = 1
++++
+
+= Cards
+:endpointdir: content/api/core/cards
+:outfilesuffix: /
+:object: card
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+The cards resource represents the payment cards with which users conduct transactions. 
+Cards are owned by users and communicate with the Marqeta platform over card networks such as Discover, Mastercard, and Visa. 
+Each card has a number of attributes, such as a primary account number (PAN), expiration date, and card verification value (CVV2). 
+Cards are derived from and controlled by a card product.
+
+[NOTE]
+For an overview of cards and the card object, see <</guides/cards/about_cards#_about_cards, About Cards>>.
+
+include::{endpointdir}/POST_cards.adoc[]
+
+include::{endpointdir}/GET_cards_token.adoc[]
+
+include::{endpointdir}/PUT_cards_token.adoc[]

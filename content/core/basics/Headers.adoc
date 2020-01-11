@@ -1,0 +1,31 @@
++++
+title = "Headers"
+weight = 100
++++
+
+= Headers
+:outfilesuffix: /
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+To communicate with the Core API of the Marqeta platform, you must include the proper headers in your API requests.
+
+[NOTE]
+For information on headers included in JIT Funding requests sent by the Marqeta platform, see Gateway JIT Funding Messages.
+
+== Request headers
+
+You must include the following headers in requests sent to the Core API:
+
+|===
+| Name | Description | Request Type | Required Value
+
+| authorization	| Credentials to authenticate your request.| GET, POST, PUT | Your token
+| content-type | The media type of the requested resource. | POST, PUT | application/json
+|===
+
+=== Sample request headers
+
+`Headers: Content-Type: application/json, Authorization: Basic {your_encoded_credentials}`

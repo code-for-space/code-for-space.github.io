@@ -1,0 +1,27 @@
++++
+title = "Businesses"
+tags = ["Businesses", "Account Holders", "GPA"]
+weight = 100
++++
+
+= Businesses
+:outfilesuffix: /
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+The business resource represents a business on the Marqeta platform. 
+This resource stores business attributes such as the legal and DBA names, office location, date of establishment, and financial information such as account balances. 
+By default, every business automatically has a general purpose account (GPA). 
+Businesses are allowed to also have merchant-specific accounts (MSAs). 
+Note that account balances reside at the business level — there are no separate "account" or "balance" objects.
+
+The Marqeta platform allows you to set up business-user hierarchical relationships that enable a business to control and monitor the card use of some specified group of users. 
+In a hierarchical sense, the business is a "parent" and the users are "children". 
+Businesses cannot directly own cards, but their children can. In real-life terms, these children would likely be employees, or perhaps customers. 
+You declare the parent-child hierarchical relationship between a business and user within the user definition by referencing the token that identifies the business. 
+A business cannot be the child of another business or of a user.
+
+[NOTE]
+A user can simultaneously be a child of a business and a parent of other users if the user is not configured to use the parent's account balances and the user's children are configured to use the parent's account balances.

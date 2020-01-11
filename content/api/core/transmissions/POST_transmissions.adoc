@@ -1,0 +1,76 @@
+== Create and send transmissions
+
+*Action:* `POST` +
+*Endpoint:* `/transmissions`
+
+A transmission is an email or fax sent to a recipient and includes a single-use virtual payment card with optional message and metadata. The transmission is formatted based on the specified template.
+
+When you create a new transmission, the Marqeta platform automatically sends it to the specified recipient—you do not need to make a separate API call. The Marqeta platform response includes the transmission_outbounds object, which you can use to track the state of each send attempt.
+
+The following image shows a sample fax transmission:
+
+(images!)
+
+The following image shows a sample email transmission:
+
+(images!)
+
+=== Body field details
+
+[cols="10,10,10,50,20"]
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+include::../_snippets/core_field_token.adoc[]
+| transmission_method | string | Yes | The channel by which a transmission is sent. | EMAIL &vert; FAX 
+| card_token | string | Yes | The token that identifies the single-use virtual card to include in the transmission. | An existing single-use virtual card token. <br> <br> Submit a GET to /cards/user/{token} to retrieve card tokens for a particular user. 
+| fax_recipient | string | No | The fax number of the intended recipient. <br> <br> Required if transmission_method is FAX. |  Format your fax number as +(country code)(area code)(fax number) with no spaces or hyphens. For example, +1231231234. 
+| email_recipient | string | No | The email address of the intended recipient. <br> <br> Required if transmission_method is EMAIL. | 255 char max 
+| from | string | No | If transmission\_method is FAX, the fax number of the transmission sender to be printed on the transmission. <br> <br> If transmission\_method is EMAIL, the email address that populates the 'from' field of the email message. If an email address without a "marqeta.com" domain is provided, the email address that populates the 'reply-to' field of the email message. <br><br>**Note:** If no email address is provided, or if the email address provided does not use the "marqeta.com" domain, the 'from' field of the email message is populated with "no-reply@marqeta\.com". | If transmission\_method is FAX, format your fax number as +(country code)(area code)(fax number) with no spaces or hyphens. For example, +1231231234.
+| recipient | string | Yes | A descriptive name of the fax or email recipient. | 255 char max
+| subject | string | Yes | A high-level subject line description of the transmission contents. | 255 char max
+| message | string | No | The message body of the transmission. | 1024 char max
+| logo_location | string | No | The URL of the logo that appears in the fax template or email message. | A valid URL for an image no larger than 250 x 250. <br> <br> Supported image formats include GIF, PNG, and JPG.
+| metadata | object | No | An object containing custom metadata. |  
+| template_token | string | Yes | The token that identifies the template to use with the transmission; the template defines the layout and formatting of the transmission. | A template token, or "default".
+|===
+
+==== The metadata object
+
+[cols="10,10,10,50,20"]
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| *custom\_name\_01* ... *custom\_name\_20* <br> <br> (255 char max per name) | string | No | Custom data transmitted with the card data. You can define the names and values of up to 20 fields, for example:<br><br><span class="code-font">"metadata": {<br>&nbsp;&nbsp;"my\_name\_1": "my\_value\_1",<br>&nbsp;&nbsp;"my\_name\_2": "my\_value\_2"<br>&nbsp;&nbsp;}</span> | Up to 20 name-value pairs. <br> <br> 255 char max per name; 255 char max per value.
+|===
+
+==== The transmission_outbounds object (response only)
+
+[cols="10,10,50,20"]
+|===
+| Name| Type | Description | Allowable Values
+
+| state 
+| string 
+a| The status of the transmission outbound.
+
+* QUEUED – The transmission is ready and will be sent soon.
+* SENT – The transmission was sent to the recipient. 
+* FAILED – The transmission was not sent; you must resend the transmission.
+
+[NOTE]
+Submit a GET to `/transmissions/{token}` to retrieve the transmission record and review its state. 
+| QUEUED, SENT,  FAILED
+
+| link_expiration_time | string | The date and time when the link sent in the transmission email expires. | yyyy-MM-dd HH:mm:ss
+|===
+
+=== Sample request body
+
+[source,json]
+include::POST_transmissions_request.json[]
+
+=== Sample response body
+
+[source,json]
+include::POST_transmissions_response.json[]

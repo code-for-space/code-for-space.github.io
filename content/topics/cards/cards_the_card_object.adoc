@@ -1,0 +1,26 @@
+== The card object
+
+The `card` object is a first-class object that represents a payment card issued by Marqeta. The `card` object stores details about the card, including the card number and security code.
+
+Each card has an associated card product object and a user object.
+
+- The `cardproduct` object is a first-class object that defines attributes and behaviors for all associated cards. The card product operates like a template when creating new cards, but the association continues—updating the card product affects each associated card throughout the card's lifetime. Your program needs at least one card product before you can create a new card. You will work with Marqeta to create new card products in the production environment.
+- The `user` object is a first-class object that represents a current or potential card holder. In addition to storing details like name, address, and phone number, a user also represents an account to which funds can be added, and from which funds are drawn at transaction time.
+
+[NOTE]
+Each user can have a parent user and one or more child users associated with it. If configured, funds held in a parent user account can be drawn from using a child user's card. The parent account can also be a business account—businesses are never a child to a user account. The business object can have associated fundingsource objects, but it cannot have an associated card object.
+
+The attributes of a card product answer the following questions about cards:
+
+- Is the card physical or virtual?
+- For physical cards, where are they shipped?
+- Where can a card holder conduct transactions, and what is required of them to complete a transaction?
+- When is the card activated? When does it expire?
+- Can the card be added to a digital wallet?
+
+The following table outlines a card's attributes and behaviors by their source.
+
+++++
+<p data-height="265" data-theme-id="0" data-slug-hash="YONMEa" data-default-tab="js,result" data-user="quinlo" data-pen-title="Credit Card Payment Form" class="codepen">See the Pen <a href="https://codepen.io/quinlo/pen/YONMEa/">Credit Card Payment Form</a> by Adam Quinlan (<a href="https://codepen.io/quinlo">@quinlo</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+++++

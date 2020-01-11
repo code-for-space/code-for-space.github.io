@@ -1,0 +1,41 @@
+=== Levels of control
+
+The Marqeta platform enables you to create controls that apply to an individual user or to a set of users associated with a specific card product. 
+Marqeta may create additional program-level controls, which apply to all users. 
+Multiple controls can be applied at each level to control how, when, and where your users spend with their cards.
+
+To define the level to which your control applies, your API request must include an association object. 
+The association object requires one of the following:
+
+- *Card product token* – The card product to which the control applies.
+- *User token* – The user to which the control applies.
+
+[NOTE]
+Program-level controls have an empty association object. 
+While you can create controls of this type in the sandbox, only Marqeta can create and update program-level controls in production. 
+You can retrieve program-level controls in production and in the sandbox.
+
+==== Program-level controls
+
+Program-level controls are global and apply to every card product and user in your environment. 
+These controls cannot be created using the production API. 
+You will work with Marqeta to define program-level controls for your program, often based on the requirements of the issuing bank. 
+The controls you create must operate within the bounds of the controls created by Marqeta.
+
+Marqeta also helps you define other program-specific configurations based on technical and bank requirements specific to your implementation. 
+To review configurations for your program, contact your Marqeta Customer Success representative.
+
+==== Card product-level controls
+
+Card product-level controls apply to a collection of cards sharing the same properties. 
+They apply to all users with cards associated with that card product. 
+To define a control at the card product level, include a card product token in the association object.
+
+Marqeta also helps you define other card product-specific configurations based on technical and bank requirements specific to your implementation.
+
+[NOTE]
+Controls cannot be applied to individual cards.
+
+==== User-level controls
+
+User-level controls apply to a single user—the card holder. To define a control at the user level, include a user token in the association object.

@@ -1,0 +1,37 @@
+{  
+    "token": "mytestcard01",  
+    "user_token": "my_user_01",  
+    "fulfillment": {    
+        "card_personalization": {      
+            "text": {          
+                "name_line_1": {            
+                    "value": "my line 1 text"          
+                },          
+                "name_line_2": {            
+                    "value": "my line 2 text"          
+                }      
+            },      
+            "images": {        
+                "card": {           
+                    "name": "my_card_logo.png",           
+                    "thermal_color": "Black"        
+                },        
+                "carrier": {          
+                    "name": "my_carrier_logo.png",          
+                    "message_1": "my message"
+                },        
+                "signature": {          
+                    "name": "my_signature.png"
+                },        
+                "carrier_return_window": {          
+                    "name": "my_return_address_image.png"
+                }
+            }
+        }
+    },  
+    "card_product_token": "red_cardproduct",  
+    "metadata": {    	
+        "key1":"value1",    	
+        "key2":"value2" 
+    }
+}

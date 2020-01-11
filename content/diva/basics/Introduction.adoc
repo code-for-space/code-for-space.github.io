@@ -1,0 +1,42 @@
++++
+title = "Introduction"
+weight = 01
++++
+
+= Introduction
+:outfilesuffix: /
+
+The *Data insights, Visualization, and Analytics (DiVA) API* enables data-driven decisions for your business by aggregating and curating your production data in the Marqeta platform. 
+The API includes view endpoints, which give you programmatic access to the data behind Marqeta reporting and analytics tools.
+
+With the DiVA API, you can retrieve large data sets in JSON or bulk file formats (CSV, XLSX). 
+The request syntax supports filters, sorting, aggregation, and pagination, enabling you to customize the response as necessary to monitor and react to card holder behavior.
+
+The DiVA API is RESTful, meaning that it provides resource-oriented URLs, uses HTTP verbs to perform operations on resources, and uses HTTP response codes to indicate API errors.
+
+[NOTE]
+The Marqeta platform provides two APIs—the DiVA API and the Core API. 
+The Core API lets you manage your card payments program (for example, create users, issue cards, control spending, and retrieve specific transactions). 
+For information about the Core API, refer to the <</core/basics/introduction.adoc#_introduction, Core API Reference>>.
+
+== Accessing the DiVA API
+All DiVA API endpoints use the same base URL:
+
+`https://diva-api.marqeta.com/data/v2`
+
+The endpoints return data you are authorized to access based on the credentials you provide in your request. 
+Note that you must include the program query parameter and specify the name of your program with most requests. 
+For more information, see <</diva/basics/authentication.adoc#_authentication, Authentication>>.
+
+== Understanding views
+
+View endpoints provide access to aggregated data that is derived from activity on the Marqeta platform, such as transactions, card holder balances, or card statistics. The endpoint URL is generally constructed from these components:
+
+- *Type* – type of data to retrieve.
+- *Aggregation level* – how the data is aggregated (for example, by day or by card holder).
+- *Response* – format in which to return the data. The default response is a JSON object that contains the results set. You can also export the data to a file (CSV or XLSX) or retrieve a JSON representation of the data schema.
+- *Query filter* – filter for which records to return. The default filter is by date, for a recent period of time based on when the query is run.
+
+For example, to retrieve authorization transaction data aggregated by week as a CSV file, you send a `GET` request to the `/views/authorizations/week/csv` endpoint.
+
+For more information about response formats and how to customize your query results, see <</diva/basics/response_customization.adoc#_response_customization, Response Customization>>. To retrieve a list of available views, see Views.

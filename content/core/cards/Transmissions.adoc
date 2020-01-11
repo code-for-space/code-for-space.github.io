@@ -1,0 +1,30 @@
++++
+title = "Transmissions"
+weight = 30
+tags = ["Disbursements", "Cards"]
++++
+
+= Transmissions
+:endpointdir: content/api/core/transmissions
+:outfilesuffix: /
+:object: transmission
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+Use the `/transmissions` endpoint to send payment information to a recipient securely by email or fax. 
+The transmission includes details for a single-use virtual card, along with optional metadata that is relevant to the payment. 
+For example, you might need to forward booking details to a hotel to fulfill a travel service you provide.
+
+For each transmission, you must specify a template that defines the layout and formatting of the content included. 
+The Marqeta platform provides a basic template (named "default") that displays the virtual card alongside a table of metadata.
+
+Fax transmissions include the payment card data and metadata printed on the page.
+Email transmissions include a secure link to the payment card information and metadata. 
+By default, the link expires 48 hours after creation and can only be accessed three times before becoming non-functional.
+
+[NOTE]
+If you are interested in using this feature, contact your Marqeta Customer Success representative for more information.
+
+include::content/api/core/transmissions/POST_transmissions.adoc[]

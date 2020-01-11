@@ -1,0 +1,43 @@
++++
+title = "About Just-in-Time Funding"
++++
+
+= About Just-in-Time Funding
+:toc: 
+:toc-title:
+
+*Just-in-Time (JIT) Funding* is a method of automatically funding accounts in real time during the transaction process.
+
+The standard funding model requires you to pre-load funds into individual accounts and maintain sufficient balances for each card holder's transactions. You must manage each account balance to avoid under-funded or over-funded accounts.
+
+With JIT Funding, accounts do not need to carry a balance. 
+Instead, the Marqeta platform automatically moves funds from your funding source into the account at transaction time. 
+The Marqeta platform makes programmatic funding decisions based on the details of the transaction. 
+You can also directly participate in the decision-making process by configuring an endpoint on your system to receive and respond to JIT Funding requests originating on the Marqeta platform. 
+When a transaction is approved, the Marqeta platform moves funds from the funding source to the account.
+
+At the end of this guide, you should understand:
+
+- The role of JIT Funding in transactions on the Marqeta platform.
+- The available types of JIT Funding.
+- How to implement JIT Funding.
+
+== Managed vs. Gateway JIT Funding
+
+Marqeta supports the following types of JIT Funding:
+
+- *Managed JIT Funding* – The Marqeta platform applies spend controls to make authorization decisions.
+- *Gateway JIT Funding* – The Marqeta platform applies spend controls to make authorization decisions and forwards funding requests to your system (the gateway) to make funding decisions.
+
+Managed JIT Funding simplifies the funding task by handling all authorization decisions on the Marqeta platform, but limits the level of control you have over the funding approval process.
+
+Gateway JIT Funding enables your system to participate in each transaction. When a card holder with a JIT-funded account attempts to spend, the Marqeta platform sends a funding request containing details about the transaction to the gateway endpoint on your system. Your system makes a decision to allow or deny the funds based on your own business rules and returns the appropriate response to the Marqeta platform. This allows you to have a higher level of control over transactions, but requires your system to respond quickly and accurately to every funding request.
+
+[NOTE]
+The Marqeta platform only sends funding requests to your gateway endpoint if they are actionable (such as authorizations). For the remainder, the Marqeta platform sends a non-actionable notification to your webhook endpoint. You can use this data to update your account balances according to the transaction type–some transactions impact account balances and some do not. For more information, see Event Types.
+
+Gateway JIT Funding also enables you to add metadata to your gateway's response that populates the transaction record with additional details, such as an order number. This metadata can facilitate correlation between records on your system and the Marqeta platform, and simplify reconciliation.
+
+For more information on Gateway JIT Funding requests, responses, and notifications, see the Gateway JIT Funding Messages page.
+
+The following table compares Managed JIT Funding with Gateway JIT Funding:

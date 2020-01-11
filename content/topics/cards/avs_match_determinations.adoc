@@ -1,0 +1,18 @@
+== AVS match determinations
+
+AVS attempts to match address data provided by the purchaser with the card holder's address data.
+If the merchant does not provide address data in the transaction message, the Marqeta platform does not attempt address verification.
+
+If you enable AVS for a given transaction type, and the merchant includes the address data of the card holder, the Marqeta platform's transaction record includes the purchaser-provided address, the Marqeta platform's on-file address, and the Marqeta platform's match determination, which indicates whether the two street addresses and postal codes match.
+
+Multiple resources on the Marqeta platform can contain the on-file address data. 
+AVS checks the following objects for an on-file address, listed in priority order:
+
+- The `user` object that represents the card holder.
+- The parent `user` object associated with the card holder.
+- The `business` object associated with the card holder.
+- The `card.fulfillment.shipping` object associated with the card.
+- The `bulkissuance.fulfillment.shipping` object associated with the card.
+- The `cardproduct.fulfillment.shipping` object associated with the card.
+
+For example, if the user object that represents the card holder does not contain address data, AVS attempts to match the address data contained in the parent user object.

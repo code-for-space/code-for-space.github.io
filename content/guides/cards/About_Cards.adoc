@@ -1,0 +1,37 @@
++++
+title = "About Cards"
+categories = ["Cards"]
+tags = ["Cards", "Issuing", "Virtual", "Physical"]
+weight = 100
++++
+
+= About Cards
+:outfilesuffix: /
+:topicdir: content/topics/cards
+:toc: 
+:toc-title:
+:toclevels: 1
+
+A card is a payment device that enables a user to conduct transactions at merchants.
+Cards can be physical or virtual.
+You can also tokenize cards for use in digital wallets.
+
+Payment cards are represented on the Marqeta platform by the card object, which stores data about the card.
+Your application calls the Marqeta API to issue and manage cards.
+
+The Marqeta platform enables you to customize a card's attributes, behaviors, and lifecycle, including limits on spending, the number of card uses, and the number of active cards.
+
+[TIP]
+For the complete `/cards` endpoint reference, see the <</core/cards/cards.adoc#_cards, Cards>> page.
+
+At the end of the guide, you should understand:
+
+- The role cards play in the payments ecosystem.
+- The card object on the Marqeta platform.
+- The card lifecycle, from issuance to termination.
+
+include::{topicdir}/cards_in_the_payments_ecosystem.adoc[]
+
+include::{topicdir}/cards_the_card_object.adoc[]
+
+include::{topicdir}/cards_the_lifecycle.adoc[]

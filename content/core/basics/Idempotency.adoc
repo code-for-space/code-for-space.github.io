@@ -1,0 +1,15 @@
++++
+title = "Idempotency"
+weight = 200
++++
+
+= Idempotency
+:outfilesuffix: /
+:source-highlighter: highlightjs
+:toc:
+:toc-title:
+:toclevels: 1
+
+An idempotent operation is one that has no additional effect if it is called more than once with the same input parameters. All Core API POST calls are idempotent capable when the primary token is set in the request object.
+
+For example, if you issue a `POST` call to create a resource and don't receive a response because the card network timed out, you can reissue the same call, with identical content and primary token, and will receive a 201 success response.

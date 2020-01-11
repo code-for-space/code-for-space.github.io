@@ -1,0 +1,73 @@
++++
+title = "Managing Lost, Stolen, or Damaged Cards"
+categories = ["Cards"]
+tags = ["Cards", "Security"]
++++
+
+= Managing Lost, Stolen, or Damaged Cards
+:toc: 
+:toc-title:
+
+You might need to suspend, terminate, and/or reissue a card if it is lost, damaged, or stolen. 
+You can perform these actions on physical and virtual cards as well as on any digital wallet tokens sourced from the affected card.
+
+Note that the state of any digital wallet token is independent from the state of its source card and independent from all other digital wallet tokens, even if they share the same source card. 
+For example, in order to suspend a card and two digital wallet tokens sourced from that card (say, one provisioned to a phone and one to a laptop), you would make three API calls — one for the card and one for each digital wallet token.
+
+== Card stolen
+
+If a card is stolen, you should terminate it.
+
+*To terminate a card:* 
+Issue a `POST` request to the `/cardtransitions` endpoint and set the state field to TERMINATED. 
+Terminating a card terminates all cards that have the same PAN but does not terminate associated digital wallet tokens.
+
+When creating a replacement for a stolen card, the replacement should have a new PAN, CVV2, and expiration date. 
+Optionally, you can copy the PIN from the old card to the new card. 
+You can also reassign all digital wallet tokens associated with the stolen card to the new card (this option eliminates the need to terminate the tokens and then provision new ones).
+
+*To create a replacement card with a new PAN (and move the PIN and digital wallets tokens from the old card to the new card):* 
+Issue a `POST` request to the `/cards` endpoint. 
+In the request, set both the `translate_pin_from_card_token` and `activation_actions.swap_digital_wallet_tokens_from_card_token` fields to the value of the old card's token field.
+
+You must also set the `required user_token` and `card_product_token` fields to appropriate values. 
+Note that the digital wallet tokens are not reassigned until the replacement card is activated.
+
+*To terminate a digital wallet token:* 
+Issue a `POST` request to the `/digitalwallettokentransitions` endpoint and set the state field to TERMINATED.
+
+== Card lost
+
+If a card is lost, you should either suspend or terminate it. To learn about card terminations, refer to the <<Card stolen>> section.
+
+*To suspend a card:*
+Issue a `POST` request to the `/cardtransitions` endpoint and set the state field to SUSPENDED.
+
+Suspending a card suspends all cards that have the same PAN but does not suspend associated digital wallet tokens (every token has a unique PAN).
+
+*To suspend a digital wallet token:* 
+Issue a `POST` request to the `/digitalwallettokentransitions` endpoint and set the state field to SUSPENDED.
+
+*To reactivate a suspended card or digital wallet token:* 
+Issue a `POST` request to the same endpoint used for suspending it and set the state field to ACTIVE.
+
+== Card damaged
+
+If a card is damaged, reissue the card. 
+A reissued card has the same PAN as the old card but a new CVV2 and expiration date. 
+The damaged card does not need to be suspended or terminated immediately.
+
+*To reissue a card:* 
+Issue a `POST` request to the `/cards` endpoint and set the `reissue_pan_from_card_token` field to the value of the old card's `token` field. 
+This action creates a new card with the same PAN as the old card but with a new CVV2 and new expiration date. 
+All associated digital wallet tokens are reassigned to the new card when it's activated.
+
+[NOTE]
+====
+. You do not need to set the `translate_pin_from_card_token` and `activation_actions.swap_digital_wallet_tokens_from_card_token` fields.
+. You can reissue only the most recent in a chain of reissued cards.
+. You can tokenize only the most recent in a chain of reissued cards.
+. You can reissue a card only to the original user.
+. You cannot reissue a physical card as a virtual card.
+. You can reissue a virtual card as a physical card.
+====

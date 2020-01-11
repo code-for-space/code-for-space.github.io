@@ -1,0 +1,147 @@
+== Update card
+
+*Action:* `PUT` +
+*Endpoint:* `/cards/{token}`
+
+Update the details of an existing card. For example, you can update an unactivated card in order to associate it with a different user.
+
+=== URL path parameters
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| token | string | Yes | Identifies the card to update. | Existing card token. <br> <br> Issue a GET to /cards/user/{token} to retrieve card tokens for a specific user. |
+|===
+
+=== Body field details
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| user_token | string | No | Specifies the user you want to associate with the card. | Existing user token. <br> <br> Issue a GET to /users to retrieve user tokens. |
+| expedite | boolean | No | Set to `true` to request expedited processing and shipping of the card. Expedited orders ignore the setting of the`fulfillment.shipping.method` field and always ship by FedEx Priority mail. <br> <br> This expedited service is available only for cards fulfilled by [Perfect Plastic Printing](http://perfectplastic.com/) and [IDEMIA](http://www.idemia.com). For other fulfillment providers, set this field to `false`. <br> <br> **Note:** Contact Marqeta Customer Success for information regarding the cost of expedited service. | true &vert; false; <br> <br> Default: false
+| fulfillment | object | No | Determines physical characteristics of a card and shipment information. || metadata | object | No | Associates customer-injected metadata with the card. |
+|===
+
+==== The fulfillment object
+
+|===
+| Name | Type | Required? | Description
+
+| card_personalization | object | No | Allows personalized attributes to be added to the card.
+| shipping | object | No | Specifies shipping details for the card.
+|===
+
+==== The fulfillment.shipping object
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| return_address | object | No | Address to which card will be returned if shipping fails. <br><br>For individual card orders: If no return_address is specified for the card, then the return_address for the card product is used. For an address to be valid for use, its address1, city, state, and postal_code fields must be populated. The country is assumed to be USA if the country field is unpopulated.| 
+| recipient_address | object | No | Address to which card will be shipped. <br><br>For individual card orders: If no recipient_address is specified for the card, then the recipient_address for the user is used. If no recipient_address is specified for the user, then the recipient_address for the card product is used. For an address to be valid for use, its address1, city, state, and postal_code fields must be populated. The country is assumed to be USA if the country field is unpopulated.|
+| method | string | No | Specifies the shipping company and shipping service level. <br> <br> This field is ignored if your fulfillment provider is either Perfect Plastic Printing or IDEMIA and the `expedite` field is set to `true`. In this case, the shipping method is implicitly FEDEX_EXPEDITED. | Values allowed depend on your fulfillment provider. <br> <br> **Perfect Plastic Printing** and **IDEMIA:** <br> USPS_REGULAR&nbsp;&vert; FEDEX_EXPEDITED <br> <br> **Arroweye Solutions:** <br> UPS_REGULAR &vert; UPS_EXPEDITED &vert; USPS_REGULAR &vert; USPS_EXPEDITED| 
+| care_of_line | string | No | Adds the specified value as a C/O (care of) line to the mailing carrier. <br> <br> __Note:__ This field overrides the equivalent field on the associated card product. | 255 char max
+|===
+
+==== The fulfillment.shipping.return_address & recipient_address objects
+
+|===
+| Name         | Type   | Required? | Description                     | Allowable Values
+
+| address1     | string | No        | Number and street.              | 50 char max
+| address2     | string | No        | Additional address information. | 50 char max 
+| city         | string | No        | City.                           | 50 char max
+| state        | string | No        | State.                          | 50 char max
+| postal_code  | string | No        | Postal code.                    | 50 char max
+| country      | string | No        | Country.                        | 40 char max
+| phone        | string | No        | Telephone number.               | 50 char max
+| first_name   | string | No        | First name.                     | 50 char max
+| middle_name  | string | No        | Middle name.                    | 50 char max
+| last_name    | string | No        | Last name.                      | 50 char max
+|===
+
+==== The fulfillment.card_personalization object
+
+[NOTE]
+When the Marqeta platform fulfills an individual card order, card personalization attributes defined at the card level override matching attributes of the associated card product. Contact your Marqeta Customer Success representative to make use of card personalization.
+
+|===
+| Name | Type | Required? | Description
+
+| text | object | No | Specifies personalized text that appears on the card.
+| carrier | object | No | Specifies attributes of the card carrier (if your fulfillment provider is Arroweye Solutions). 
+| images | object | No | Specifies personalized images that appear on the card (for individual card orders only). Also specifies attributes of the card carrier (if your fulfillment provider is Perfect Plastic Printing or IDEMIA).  
+|===
+
+===== The fulfillment.card_personalization.text object
+
+|===
+| Name | Type | Required? | Description | Allowable Values 
+
+| name\_line\_1.value | string | No | First line of personalized text printed on the card. | The card can accommodate only 21 characters. Strings longer than 21 characters are truncated.
+| name\_line\_2.value | string | No | Second line of personalized text printed on the card. | The card can accommodate only 21 characters. Strings longer than 21 characters are truncated.
+|===
+
+==== The fulfillment.card_personalization.carrier object
+
+[NOTE]
+Use this carrier object if your fulfillment provider is Arroweye Solutions.
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| template\_id | string | No | Specifies the card carrier template to use. | A card carrier template ID.
+| logo\_file | string | No | Specifies an image to display on the card carrier. | Contains the name of the image file and must match the name of the file you send to your fulfillment provider.  
+| logo\_thumbnail\_file | string | No | Specifies a thumbnail-sized rendering of the image specified in the `logo_file` field. | Contains the name of the image file and must match the name of the file you send to your fulfillment provider.
+| message\_file | string | No | Specifies a text file containing a custom message to print on the card carrier. | Contains the name of the text file and must match the name of the file you send to your fulfillment provider.
+|===
+
+==== The fulfillment.card_personalization.images object
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| card | object | No | Specifies personalized images that appear on the card. |
+| carrier | object | No | Specifies personalized images and text that appear on the card carrier (if your fulfillment provider is Perfect Plastic Printing or IDEMIA). |
+| signature.name | string | No | Specifies a PNG image of the card holder's signature. | Contains the name of the image file and must match the name of the file you send to your fulfillment provider.  <br> <br> Must end in `.png`.
+| carrier_return_window.name | string | No | Specifies a PNG image to display in the return-address window of envelopes used for sending cards to card holders. | Contains the name of the image file and must match the name of the file you send to your fulfillment provider.  <br> <br> Must end in `.png`.
+|===
+
+==== The fulfillment.card_personalization.images.card object
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| name | string | No | Specifies a PNG image to display on the card. | Contains the name of the image file and must match the name of the file you send to your fulfillment provider. <br> <br> Must end in `.png`.
+| thermal_color | string | No | Specifies the color of the image displayed on the card. | Contains the name of the color and must match one of the provider's predefined colors.  
+|===
+
+==== The fulfillment.card_personalization.images.carrier object
+
+[NOTE]
+Use this carrier object if your fulfillment provider is Perfect Plastic Printing or IDEMIA.
+
+|===
+| Name | Type | Required? | Description | Allowable Values
+
+| name | string | No | Specifies a PNG image to display on the card carrier. | Contains the name of the image file and must match the file you send to your fulfillment provider.  <br> <br> Must end in `.png`.
+| message_1 | string | No | Specifies a custom message that appears on the card carrier. | 60 char max
+|===
+
+==== The metadata object
+
+|===
+| Name	| Type | Required? | Description | Allowable Values
+
+| *customer\_defined\_name_01* <br> *customer\_defined\_name_02* <br> <br> ... <br> <br> *customer\_defined\_name_20* <br> <br> (255 char max per name) | string | No | Associates customer-injected metadata with the card. The Marqeta customer defines the names and values of up to 20 fields, for example: <br> <br> <span class="code-font">"metadata": {<br>&nbsp;&nbsp;"my\_name\_1": "my\_value\_1",<br>&nbsp;&nbsp;"my\_name\_2": "my\_value\_2"<br>&nbsp;&nbsp;}</span> <br> <br> The following samples show how to update, add, and delete fields. Existing fields are unaffected unless they are included in the request. <br> <br> Update a field's value: <br> <br> <span class="code-font">"metadata": {<br>&nbsp;&nbsp;"my\_name\_1": "my\_updated\_value"<br>&nbsp;&nbsp;}</span> <br> <br> Add a new field: <br> <br> <span class="code-font">"metadata": {<br>&nbsp;&nbsp;"my\_new\_field": "my\_value"<br>&nbsp;&nbsp;}</span> <br> <br> Delete an existing field: <br> <span class="code-font">"metadata": {<br>&nbsp;&nbsp;"my\_name\_1": null<br>&nbsp;&nbsp;}</span><br> | Up to 20 name-value pairs. <br> <br> 255 char max per name; 255 char max per value
+|===
+
+=== Sample request body
+
+[source,json]
+include::PUT_cards_token_request.json[]
+
+=== Sample response body
+
+[source,json]
+include::PUT_cards_token_response.json[]

@@ -1,0 +1,50 @@
++++
+title = "Response Customization"
+weight = 30
++++
+
+= Reponse Customization
+:outfilesuffix: /
+
+The DiVA API provides view endpoints for requesting aggregated data from the Marqeta platform. 
+You can retrieve data as a JSON object or export the data in a file.
+
+For `GET` requests to the `/views` endpoint, the DiVA API provides a filter syntax and query parameters that allow you to customize the responses. 
+You can obtain the field names and associated data types for a given view by retrieving a JSON representation of the schema.
+
+== Response formats
+
+=== JSON results
+
+The default response format is a JSON object that contains metadata about the query results and an array of records matching your query. 
+The API processes the request synchronously and returns up to a limit of 10,000 result records.
+
+The following sample shows a JSON response. 
+For a description of the metadata returned with query results, see <<Response field details>> on this page.
+
+[source,json]
+{
+    "total": 372,
+    "is_more": true,
+    "count": 100,
+    "info": {},
+    "start_date": "2016-10-24T01:05:26+0000",
+    "end_date": "2016-10-28T21:15:24+0000",
+    "last_run_time": "",
+    "schema": [
+          ...
+    ],
+    "records" : [
+          ...
+    ]
+}
+
+=== File exports (CSV and XLSX)
+
+As an alternative to returning your data set as a JSON object, you can export it as a CSV or XLSX file. The export mechanism operates asynchronously and returns up to 1,048,576 rows in the file. You can choose between Zip and Gzip file compression. See Exporting and Downloading Data Sets for more information.
+
+== Schema object
+
+You can retrieve the JSON-formatted schema for any view by appending /schema to the endpoint URL. The schema contains an array of objects that describe the fields available in the view, including the data type of each field. For example, to retrieve the view schema for authorization transaction data aggregated by week, send a GET request to the /views/authorizations/week/schema endpoint.
+
+== Response field details
