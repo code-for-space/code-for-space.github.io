@@ -1,6 +1,6 @@
 ignorefiles = [ "snippets", "api", "topics", "tutorials" ]
 
-baseURL = "https://www.mqdocs.com/"
+baseURL = "https://codeforspace.github.io/"
 languageCode = "en-us"
 title = "Marqeta Developers"
 
