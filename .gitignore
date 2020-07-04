@@ -5,7 +5,9 @@
 ### Hugo ###
 # Generated files by hugo
 /public/
-/resources/_gen/
+resources/
+node_modules/
+tech-doc-hugo
 
 # Executable may be added to repository
 hugo.exe

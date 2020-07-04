@@ -1,4 +1,0 @@
-+++
-title = "Just-in-Time Funding"
-shortTitle = "JIT Funding"
-+++

@@ -1,6 +1,0 @@
-+++
-title = "Developer Guides"
-shortTitle = "Guides"
-weight = 01
-hideSidebar = false
-+++
