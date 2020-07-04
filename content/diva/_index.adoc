@@ -1,5 +1,0 @@
-+++
-title = "DiVA API Reference"
-shortTitle = "DiVA API"
-weight = 20
-+++
